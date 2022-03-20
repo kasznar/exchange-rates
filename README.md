@@ -16,3 +16,4 @@ WebSocket kapcsolaton kereszül feliratkozunk a változásra, amit a server más
 
 
 ### Wireframe
+![wireframe](https://github.com/kasznar/exchange-rates/blob/main/wireframe.png?raw=true)
