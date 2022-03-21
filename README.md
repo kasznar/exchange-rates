@@ -17,3 +17,37 @@ WebSocket kapcsolaton kereszül feliratkozunk a változásra, amit a server más
 
 ### Wireframe
 ![wireframe](https://github.com/kasznar/exchange-rates/blob/main/wireframe.png?raw=true)
+
+### Dev config
+Így mūködik localban, ha 3000-res porton megy a Vue app és be van állítva a proxy a vite configban.
+
+`vite.config.ts`
+```javascript
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        ws: true,
+        changeOrigin: true,
+        target: 'http://localhost:8080',
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    }
+  }
+})
+```
+
+`websocket connection`
+```javascript
+const webSocket = new WebSocket('ws://localhost:3000/api');
+
+webSocket.onmessage = function (event) {
+  console.log(event.data);
+}
+```
